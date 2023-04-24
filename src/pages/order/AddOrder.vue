@@ -32,7 +32,25 @@
     </q-header>
 
     <q-form @submit="formSubmit">
-      <q-select outlined v-model="order.category" :options="categories"  option-label="name"
+      <q-select outlined v-model="order.user"
+                :options="users"  option-label="fio" label="Выберите пользователя"
+                @filter="filterFn"
+                use-input
+                input-debounce="0"
+                clearable
+                lazy-rules
+                :rules="[ val => val  || 'Это обязательное поле']"
+      >
+        <template v-slot:option="scope">
+          <q-item v-bind="scope.itemProps">
+<q-item-section>#{{ scope.opt.id }}</q-item-section>
+<q-item-section>{{ scope.opt.fio }}</q-item-section>
+<q-item-section>{{ scope.opt.phone }}</q-item-section>
+
+          </q-item>
+        </template>
+      </q-select>
+      <q-select outlined v-if="order.user" v-model="order.category" :options="categories"  option-label="name"
                 v-on:update:model-value="order.service=null" label="Выберите категорию"
                 lazy-rules
                 :rules="[ val => val  || 'Это обязательное поле']"
@@ -43,11 +61,7 @@
                 :rules="[ val => val  || 'Это обязательное поле']"
       />
       <div class="" v-if="order.service">
-        <q-select outlined v-model="order.user"
-                  :options="users"  option-label="fio" label="Выберите пользователя"
-                  lazy-rules
-                  :rules="[ val => val  || 'Это обязательное поле']"
-        />
+
         <q-input outlined v-model="order.start_price" type="number" label="Начальная цена"
                  lazy-rules
                  :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
@@ -148,6 +162,21 @@ const order = ref({
 })
 
 const order_files = ref([])
+
+function filterFn (val, update) {
+  if (val === '') {
+    update( async () => {
+      users.value = await getOwnUsers()
+    })
+    return
+  }
+
+  update(() => {
+    const needle = val.toLowerCase()
+    console.log()
+    users.value = users.value.filter(x=>x.fio.includes(needle) || x.phone.includes(needle))
+  })
+}
 
 onBeforeMount(async ()=>{
   await getCategories()

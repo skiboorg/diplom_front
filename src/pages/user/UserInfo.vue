@@ -37,8 +37,10 @@
 
     </q-header>
     <div v-if="user">
+
       <div class="row q-col-gutter-md">
         <div class="col-12 col-md-4">
+
           <q-card class="q-mb-md">
             <q-card-section>
               <div class="flex justify-between items-start q-mb-lg">
@@ -68,6 +70,21 @@
 
             </q-card-section>
           </q-card>
+          <p>Соц. сети</p>
+          <q-list bordered separator>
+            <q-item v-for="item in user.networks" :key="item.id">
+              <q-item-section>{{item.name}}</q-item-section>
+              <q-item-section><a :href="item.link" target="_blank">{{item.link}}</a> </q-item-section>
+            </q-item>
+
+          </q-list>
+          <p>Файлы</p>
+          <div class="row q-col-gutter-md">
+            <div class="col-6" v-for="file in user.files" :key="file.id">
+              <a :href="file.file" target="_blank">{{ file.description }}</a>
+
+            </div>
+          </div>
         </div>
 
         <div class="col-12 col-md-4">

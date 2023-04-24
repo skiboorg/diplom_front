@@ -43,6 +43,13 @@ const routes = [
     ]
   },
   {
+    path: '/users/edit/:uuid',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/user/Edit.vue') }
+    ]
+  },
+  {
     path: '/users',
     component: () => import('layouts/MainLayout.vue'),
     children: [
