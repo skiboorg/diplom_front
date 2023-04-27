@@ -22,7 +22,7 @@
             label="Пароль*"
             outlined
             dense
-            color="secondary"
+            color="primary"
             lazy-rules
             :rules="[val => val !== null && val !== '' || 'Это обязательное поле' ]"
           >
@@ -35,7 +35,7 @@
             </template>
           </q-input>
           <div class="text-center q-mb-lg">
-            <q-btn no-caps  color="primary" class="max-width" push
+            <q-btn no-caps   class="max-width bg-btn-primary" unelevated
                    :loading="vars.is_loading" type="submit" label="Вход" />
           </div>
 

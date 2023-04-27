@@ -1,85 +1,87 @@
 <template>
   <q-page class="q-mt-lg">
-    <q-header reveal elevated  class="bg-white text-dark " >
+    <q-header reveal   class="bg-white text-dark q-pa-md" >
+      <div class="row items-center justify-between q-col-gutter-md">
+        <div class="col-2">
+          <img src="https://placehold.co/200x30" alt="">
+        </div>
 
-      <q-toolbar>
-        <q-tabs>
-          <q-route-tab
-            label="НАЗАД"
-            to="/users"
-            exact
-          />
-        </q-tabs>
-
-        <q-toolbar-title class="text-center">
-
-        </q-toolbar-title>
-
-        <div>
+        <div class="col-6">
+          <q-input model-value="1" outlined label="Поиск"/>
+        </div>
+        <div class="col-2 flex justify-end">
+          <q-btn  label="Заказы" to="/" no-caps  unelevated class="bg-btn-primary q-mr-md"/>
+          <q-btn  label="Клиенты" to="/users" no-caps  unelevated flat rounded />
+        </div>
+        <div class="col-2">
+          <q-separator vertical/>
           <p class="q-mb-none text-center">{{$auth.user.fio}}</p>
           <p class="text-caption text-grey q-mb-none text-center">{{$auth.user.is_manager ? 'Менеджер' : 'Администратор'}}</p>
         </div>
-      </q-toolbar>
-
-
+      </div>
     </q-header>
-    <q-form @submit="formSubmit">
+    <q-card>
+      <q-card-section class="q-pa-lg">
+        <q-form @submit="formSubmit">
 
-      <q-input outlined v-model="user.login"  label="Логин*"
-               lazy-rules
-               :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
-      />
-      <q-input outlined v-model="user.fio"  label="ФИО*"
-               lazy-rules
-               :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
-      />
-      <q-input outlined v-model="user.phone"  label="Телефон*"
-               lazy-rules
-               :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
-      />
-      <q-input outlined v-model="user.email"  label="Почта"/>
-      <q-input outlined v-model="user.comment" type="textarea"  label="Комментарий"/>
-      <q-toggle v-model="user.is_vip" label="Vip"/>
-      <q-toggle v-model="user.is_problem" label="Проблемный"/>
-      <q-toggle v-model="user.is_private" label="Частный"/>
-      <q-separator spaced="lg"/>
-      {{user_networks}}
-      <q-btn :loading="loading" label="Добавить соцсеть" @click="networkAction('add',null,null,null)"/>
-      <q-list separator>
-        <q-item v-for="(item,index) in user_networks" :key="index">
-          <q-item-section>
-            <q-input :readonly="!user_networks[index].new" outlined v-model="user_networks[index].name" label="Название соцсети"
-                     />
-          </q-item-section>
-          <q-item-section>
-            <q-input outlined :readonly="!user_networks[index].new" v-model="user_networks[index].link" label="Ссылка"
-                     />
-          </q-item-section>
-          <q-item-section>
-            <q-btn :loading="loading" label="Удалить ссылку" @click="networkAction('delete',index,user_networks[index].new,item.id)"/>
-          </q-item-section>
-        </q-item>
-      </q-list>
-      <q-separator spaced="lg"/>
-      <q-btn :loading="loading" label="Добавить файл" @click="fileAction('add',null,null,null)"/>
-      <q-list separator>
-        <q-item v-for="(file,index) in user_files" :key="index">
-          <q-item-section>
-            <q-file :readonly="!user_files[index].new" outlined v-model="user_files[index].file" label="Выберите файл"
-                    />
-          </q-item-section>
-          <q-item-section>
-            <q-input :readonly="!user_files[index].new" outlined v-model="user_files[index].description" label="Описание файла"/>
-          </q-item-section>
-          <q-item-section>
-            <q-btn :loading="loading" label="Удалить файл" @click="fileAction('delete',index,user_files[index].new,file.id)"/>
-          </q-item-section>
-        </q-item>
-      </q-list>
-      <q-separator spaced="lg"/>
-      <p v-if="error_text" class="text-bold text-negative">{{error_text}}</p>
-      <q-btn type="submit" label="Сохранить пользователя"/>
-    </q-form>
+          <q-input outlined v-model="user.login"  label="Логин*"
+                   lazy-rules
+                   :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
+          />
+          <q-input outlined v-model="user.fio"  label="ФИО*"
+                   lazy-rules
+                   :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
+          />
+          <q-input outlined v-model="user.phone"  label="Телефон*"
+                   lazy-rules
+                   :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
+          />
+          <q-input outlined v-model="user.email"  label="Почта"/>
+          <q-input outlined v-model="user.comment" type="textarea"  label="Комментарий"/>
+          <q-toggle v-model="user.is_vip" label="Vip"/>
+          <q-toggle v-model="user.is_problem" label="Проблемный"/>
+          <q-toggle v-model="user.is_private" label="Частный"/>
+          <q-separator spaced="lg"/>
+          {{user_networks}}
+          <q-btn :loading="loading" label="Добавить соцсеть" @click="networkAction('add',null,null,null)"/>
+          <q-list separator>
+            <q-item v-for="(item,index) in user_networks" :key="index">
+              <q-item-section>
+                <q-input :readonly="!user_networks[index].new" outlined v-model="user_networks[index].name" label="Название соцсети"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-input outlined :readonly="!user_networks[index].new" v-model="user_networks[index].link" label="Ссылка"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-btn :loading="loading" label="Удалить ссылку" @click="networkAction('delete',index,user_networks[index].new,item.id)"/>
+              </q-item-section>
+            </q-item>
+          </q-list>
+          <q-separator spaced="lg"/>
+          <q-btn :loading="loading" label="Добавить файл" @click="fileAction('add',null,null,null)"/>
+          <q-list separator>
+            <q-item v-for="(file,index) in user_files" :key="index">
+              <q-item-section>
+                <q-file :readonly="!user_files[index].new" outlined v-model="user_files[index].file" label="Выберите файл"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-input :readonly="!user_files[index].new" outlined v-model="user_files[index].description" label="Описание файла"/>
+              </q-item-section>
+              <q-item-section>
+                <q-btn :loading="loading" label="Удалить файл" @click="fileAction('delete',index,user_files[index].new,file.id)"/>
+              </q-item-section>
+            </q-item>
+          </q-list>
+          <q-separator spaced="lg"/>
+          <p v-if="error_text" class="text-bold text-negative">{{error_text}}</p>
+          <q-btn type="submit" label="Сохранить пользователя"/>
+        </q-form>
+      </q-card-section>
+    </q-card>
+
   </q-page>
 </template>
 <script setup>

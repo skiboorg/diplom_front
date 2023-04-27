@@ -1,7 +1,52 @@
+body
+  background: #F9FBFF
+  font-family: 'Inter', sans-serif
+  color: #4D515A
+.q-card
+  box-shadow: 0px 10px 60px rgba(226, 236, 249, 0.5)
+  border-radius: 15px
+
+.text-caption-alt
+  font-weight: 500
+  font-size: 14px
+  line-height: 24px
+  color: #A5A4C2
+
+.list-head
+  background: #F8FAFC
+.q-hoverable:hover > .q-focus-helper
+  background: #726BEA !important
+
+.q-field__control
+  border-radius: 15px !important
+.q-btn--rounded
+  border-radius: 15px
+  font-weight: 500
+  font-size: 16px
+  line-height: 18px
+  letter-spacing: -0.01em
+  color: $primary
+.bg-btn-primary
+  border-radius: 15px
+  background: #EEEBFD
+  color: $primary
+  font-weight: 500
+  font-size: 16px
+  line-height: 18px
+  letter-spacing: -0.01em
+
 .container
   max-width: 1300px
   margin: 0 auto
-
+.file-icon
+  svg
+    path
+      transition: all .2s linear
+      fill: #DEE0E8
+  &:hover
+    svg
+      path
+        fill: #726BEA
 @media (max-width: 768px)
   .order-list-row
     display: grid

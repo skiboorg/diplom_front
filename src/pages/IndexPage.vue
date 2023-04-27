@@ -1,120 +1,131 @@
 <template>
   <q-page class="q-mt-lg">
-    <q-header reveal elevated  class="bg-white text-dark " >
+    <q-header reveal   class="bg-white text-dark q-pa-md" >
+        <div class="row items-center justify-between q-col-gutter-md">
+          <div class="col-2">
+            <img src="https://placehold.co/200x30" alt="">
+          </div>
 
-      <q-toolbar>
-        <q-tabs>
-          <q-route-tab
-            label="ЗАКАЗЫ"
-            to="/"
-            exact
-          />
-          <q-route-tab
-            label="КЛИЕНТЫ"
-            to="/users"
-            exact
-          />
-        </q-tabs>
-
-        <q-toolbar-title class="text-center">
-
-        </q-toolbar-title>
-
-
-        <div>
-          <p class="q-mb-none text-center">{{$auth.user.fio}}</p>
-          <p class="text-caption text-grey q-mb-none text-center">{{$auth.user.is_manager ? 'Менеджер' : 'Администратор'}}</p>
+          <div class="col-6">
+            <q-input model-value="1" outlined label="Поиск"/>
+          </div>
+          <div class="col-2 flex justify-end">
+            <q-btn  label="Заказы" to="/" no-caps  unelevated class="bg-btn-primary q-mr-md"/>
+            <q-btn  label="Клиенты" to="/users" no-caps  unelevated flat rounded />
+          </div>
+          <div class="col-2">
+            <q-separator vertical/>
+            <p class="q-mb-none text-center">{{$auth.user.fio}}</p>
+            <p class="text-caption text-grey q-mb-none text-center">{{$auth.user.is_manager ? 'Менеджер' : 'Администратор'}}</p>
+          </div>
         </div>
-      </q-toolbar>
-
-
     </q-header>
-    <div class="flex justify-between">
-      <q-btn label="Фильтры" @click="filtersDialog=true"/>
-      <q-btn label="Сбросить фильтры" @click="filterString('reset')"/>
-    </div>
-      <q-list  bordered separator>
-        <q-item to="/order/add" clickable class="flex justify-center items-center">
+
+    <q-card class="full-height">
+      <q-card-section class="q-pa-lg">
+        <div class="flex justify-between q-mb-md">
+          <p class="no-margin text-bold text-h5">Заказы <span class="text-grey">{{orders?.length}}</span></p>
+          <div class="flex items-center">
+            <q-btn label="Новый заказ" unelevated no-caps to="/order/add" class="bg-btn-primary q-mr-md" />
+
+            <q-btn icon="filter_list" label="Фильтр" @click="filtersDialog=true" no-caps  unelevated class="bg-btn-primary"/>
+          </div>
 
 
-            <span>  <q-icon name="add"/> Новый заказ</span>
+        </div>
+        <q-list   >
+
+          <q-item  class="gt-sm text-caption text-weight-medium text-secondary list-head">
+<!--            <q-item-section >-->
+<!--              ФИЛЬТР-->
+
+<!--            </q-item-section>-->
+            <q-item-section>
+              <q-item-label>НОМЕР</q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>ДАТА</q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>УСЛУГА</q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>КЛИЕНТ</q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>СУММА</q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>ОПЛАТА</q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>
+                СТАТУС
+              </q-item-label>
+            </q-item-section>
 
 
+          </q-item>
+          <q-item class="order-list-row" clickable v-for="order in orders" :key="order.id" :to="`/order/${order.uuid}`">
+<!--            <q-item-section >-->
+<!--              <div class="flex ">-->
+<!--                <q-icon v-if="order.user.is_vip" name="las la-crown" color="warning" size="20px"/>-->
+<!--                <q-icon v-if="order.user.is_problem" name="las la-exclamation-circle" color="negative" size="20px"/>-->
+<!--              </div>-->
 
-        </q-item>
-        <q-item  class="gt-sm text-bold">
-          <q-item-section >
-            ФИЛЬТР
+<!--            </q-item-section>-->
+            <q-item-section>
+              <q-item-label v-if="$q.screen.lt.md" caption>Номер заказа</q-item-label>
+              <q-item-label class="text-accent flex items-center">
+                <svg v-if="order.is_dead_line_soon" class="q-mr-sm" width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 22C3.85786 22 0.5 18.6421 0.5 14.5C0.5 12.3462 1.40786 10.4045 2.86179 9.0366C4.20403 7.77375 7.5 5.49951 7 0.5C13 4.5 16 8.5 10 14.5C11 14.5 12.5 14.5 15 12.0296C15.2697 12.8032 15.5 13.6345 15.5 14.5C15.5 18.6421 12.1421 22 8 22Z" fill="#F76659"/>
+                </svg>
+                <svg v-else class="q-mr-sm" width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+               </svg>
 
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>НОМЕР</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>ДАТА</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>УСЛУГА</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>КЛИЕНТ</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>СУММА</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>ОПЛАТА</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>
-              СТАТУС
-            </q-item-label>
-          </q-item-section>
+                <p class="no-margin"> #{{order.id}}</p>
 
-
-        </q-item>
-        <q-item class="order-list-row" clickable v-for="order in orders" :key="order.id" :to="`/order/${order.uuid}`">
-          <q-item-section >
-            <div class="flex ">
-              <q-icon v-if="order.user.is_vip" name="las la-crown" color="warning" size="20px"/>
-              <q-icon v-if="order.user.is_problem" name="las la-exclamation-circle" color="negative" size="20px"/>
-            </div>
-
-          </q-item-section>
-          <q-item-section>
-            <q-item-label v-if="$q.screen.lt.md" caption>Номер заказа</q-item-label>
-            <q-item-label>{{order.id}}</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label v-if="$q.screen.lt.md" caption>Дата начала</q-item-label>
-            <q-item-label>{{new Date(order.start_date).toLocaleDateString()}}</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label v-if="$q.screen.lt.md" caption>Услуга</q-item-label>
-            <q-item-label>{{order.service.name}}</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label v-if="$q.screen.lt.md" caption>ФИО юзера</q-item-label>
-            <q-item-label>{{order.user.fio}}</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label v-if="$q.screen.lt.md" caption>Начальная цена</q-item-label>
-            <q-item-label>{{order.start_price}}</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label v-if="$q.screen.lt.md" caption>Статус оплаты</q-item-label>
-            <q-item-label><q-badge :color="order.pay_status.color" :label="order.pay_status.name" class="text-body2"/></q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>
-              <q-item-label v-if="$q.screen.lt.md" caption>Статус заказа</q-item-label>
-              <q-badge :color="order.order_status.color" :label="order.order_status.name" class="text-body2"/>
-            </q-item-label>
-          </q-item-section>
+              </q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label v-if="$q.screen.lt.md" caption>Дата начала</q-item-label>
+              <q-item-label class="text-secondary">{{new Date(order.start_date).toLocaleDateString()}}</q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label v-if="$q.screen.lt.md" caption>Услуга</q-item-label>
+              <q-item-label class="text-secondary">{{order.service.name}}</q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label v-if="$q.screen.lt.md" caption>ФИО юзера</q-item-label>
+              <q-item-label class="text-secondary flex items-center">
+                <svg v-if="order.user.is_vip" class="q-mr-sm" width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 5.00002C12.4183 5.00002 16 8.5817 16 13C16 17.4183 12.4183 21 8 21C3.58172 21 0 17.4183 0 13C0 8.5817 3.58172 5.00002 8 5.00002ZM8 8.5L6.6775 11.1797L3.72025 11.6094L5.86012 13.6953L5.35497 16.6406L8 15.25L10.645 16.6406L10.1399 13.6953L12.2798 11.6094L9.3225 11.1797L8 8.5ZM9 -0.000976562L14 2.34842e-05V3.00002L12.6366 4.13758C11.5305 3.55773 10.3025 3.17887 9.0011 3.04951L9 -0.000976562ZM7 -0.000976562L6.9997 3.04943C5.6984 3.17866 4.47046 3.55738 3.36441 4.13706L2 3.00002V2.34842e-05L7 -0.000976562Z" fill="#726BEA"/>
+                </svg>
+                {{order.user.fio}}
+              </q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label v-if="$q.screen.lt.md" caption>Начальная цена</q-item-label>
+              <q-item-label class="text-secondary">{{order.start_price}}</q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label v-if="$q.screen.lt.md" caption>Статус оплаты</q-item-label>
+              <q-item-label><q-badge class="q-mr-sm"  rounded :color="order.pay_status.color"/> {{order.pay_status.name}}</q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>
+                <q-item-label v-if="$q.screen.lt.md" caption>Статус заказа</q-item-label>
+                <q-item-label><q-badge class="q-mr-sm"  rounded :color="order.order_status.color"/> {{order.order_status.name}}</q-item-label>
+              </q-item-label>
+            </q-item-section>
 
 
-        </q-item>
-      </q-list>
+          </q-item>
+        </q-list>
+      </q-card-section>
+
+    </q-card>
+
 
 
 
@@ -146,6 +157,7 @@
         />
 
         <q-select v-if="category" outlined v-model="filters.service__id" class="q-mb-md"
+
                   :options="category.services"  map-options emit-value option-value="id" option-label="name" label="Услуга"
         />
         <q-input class="q-mb-md" outlined v-model="filters.start_date__gte" label="Дата начала больше или равна">
@@ -165,7 +177,7 @@
 
       <q-card-actions >
 <q-btn @click="filterString('filter')" label="Отфильтровать"/>
-
+        <q-btn label="Сбросить фильтры" @click="filterString('reset')"/>
 
      </q-card-actions>
     </q-card>
