@@ -1,41 +1,17 @@
 <template>
   <q-page class="q-mt-lg">
-    <q-header reveal   class="bg-white text-dark q-pa-md" >
-        <div class="row items-center justify-between q-col-gutter-md">
-          <div class="col-2">
-            <img src="https://placehold.co/200x30" alt="">
-          </div>
-
-          <div class="col-6">
-            <q-input model-value="1" outlined label="Поиск"/>
-          </div>
-          <div class="col-2 flex justify-end">
-            <q-btn  label="Заказы" to="/" no-caps  unelevated class="bg-btn-primary q-mr-md"/>
-            <q-btn  label="Клиенты" to="/users" no-caps  unelevated flat rounded />
-          </div>
-          <div class="col-2">
-            <q-separator vertical/>
-            <p class="q-mb-none text-center">{{$auth.user.fio}}</p>
-            <p class="text-caption text-grey q-mb-none text-center">{{$auth.user.is_manager ? 'Менеджер' : 'Администратор'}}</p>
-          </div>
-        </div>
-    </q-header>
 
     <q-card class="full-height">
       <q-card-section class="q-pa-lg">
         <div class="flex justify-between q-mb-md">
-          <p class="no-margin text-bold text-h5">Заказы <span class="text-grey">{{orders?.length}}</span></p>
+          <p class="q-mb-md q-mb-md-none text-bold text-h5">Заказы <span class="text-grey">{{orders?.length}}</span></p>
           <div class="flex items-center">
             <q-btn label="Новый заказ" unelevated no-caps to="/order/add" class="bg-btn-primary q-mr-md" />
-
-            <q-btn icon="filter_list" label="Фильтр" @click="filtersDialog=true" no-caps  unelevated class="bg-btn-primary"/>
+            <q-btn icon="filter_list" label="Фильтр" @click="filtersDialog=true" no-caps flat unelevated color="primary" rounded/>
           </div>
-
-
         </div>
-        <q-list   >
-
-          <q-item  class="gt-sm text-caption text-weight-medium text-secondary list-head">
+        <q-list>
+          <q-item  class="gt-sm text-caption text-weight-medium text-secondary table-top">
 <!--            <q-item-section >-->
 <!--              ФИЛЬТР-->
 
@@ -80,7 +56,7 @@
                 <svg v-if="order.is_dead_line_soon" class="q-mr-sm" width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M8 22C3.85786 22 0.5 18.6421 0.5 14.5C0.5 12.3462 1.40786 10.4045 2.86179 9.0366C4.20403 7.77375 7.5 5.49951 7 0.5C13 4.5 16 8.5 10 14.5C11 14.5 12.5 14.5 15 12.0296C15.2697 12.8032 15.5 13.6345 15.5 14.5C15.5 18.6421 12.1421 22 8 22Z" fill="#F76659"/>
                 </svg>
-                <svg v-else class="q-mr-sm" width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg v-else class="q-mr-sm gt-sm" width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                </svg>
 
                 <p class="no-margin"> #{{order.id}}</p>
@@ -108,15 +84,15 @@
               <q-item-label v-if="$q.screen.lt.md" caption>Начальная цена</q-item-label>
               <q-item-label class="text-secondary">{{order.start_price}}</q-item-label>
             </q-item-section>
+
             <q-item-section>
               <q-item-label v-if="$q.screen.lt.md" caption>Статус оплаты</q-item-label>
               <q-item-label><q-badge class="q-mr-sm"  rounded :color="order.pay_status.color"/> {{order.pay_status.name}}</q-item-label>
             </q-item-section>
+
             <q-item-section>
-              <q-item-label>
                 <q-item-label v-if="$q.screen.lt.md" caption>Статус заказа</q-item-label>
                 <q-item-label><q-badge class="q-mr-sm"  rounded :color="order.order_status.color"/> {{order.order_status.name}}</q-item-label>
-              </q-item-label>
             </q-item-section>
 
 
@@ -131,14 +107,15 @@
 
   </q-page>
   <q-dialog v-model="filtersDialog">
-    <q-card style="width: 700px; max-width: 80vw;">
+    <q-card style="width: 400px; max-width: 80vw;">
       <q-card-section class="row items-center q-pb-none">
         <div class="text-h6">Фильтры</div>
         <q-space />
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
       <q-item-section class="q-pa-md">
-        <q-btn color="secondary" label="Дата"
+        <q-btn label="Дата"
+               no-caps unelevated color="primary" rounded
                @click="filters.ordering === 'start_date' ? filters.ordering  = '-start_date' : filters.ordering  = 'start_date'"
                :icon-right="filters.ordering === 'start_date' ? 'north' : 'south'" />
         <q-toggle v-model="filters.is_dead_line_soon" label="Скоро подходит срок"/>
@@ -175,9 +152,9 @@
         </q-input>
       </q-item-section>
 
-      <q-card-actions >
-<q-btn @click="filterString('filter')" label="Отфильтровать"/>
-        <q-btn label="Сбросить фильтры" @click="filterString('reset')"/>
+      <q-card-actions align="center">
+<q-btn @click="filterString('filter')" no-caps unelevated color="primary" rounded label="Отфильтровать"/>
+        <q-btn label="Сбросить фильтры" no-caps unelevated outline color="primary" rounded @click="filterString('reset')"/>
 
      </q-card-actions>
     </q-card>

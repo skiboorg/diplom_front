@@ -16,5 +16,9 @@ export async function getOwnUsers(){
   const response = await api(`/api/user/my_users?id=${authStore.user.uuid}`)
   return response.data
 }
+export async function getNetworks(){
+  const response = await api(`/api/user/get_networks`)
+  return response.data
+}
 
 

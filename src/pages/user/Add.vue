@@ -1,96 +1,103 @@
 <template>
   <q-page class="q-mt-lg">
-    <q-header reveal elevated  class="bg-white text-dark " >
 
-      <q-toolbar>
-        <q-tabs>
-          <q-route-tab
-            label="НАЗАД"
-            to="/users"
-            exact
+  <q-card>
+    <q-card-section>
+
+      <q-form @submit="formSubmit" class="row q-col-gutter-md">
+        <div class="col-12 col-md-6">
+          <q-input outlined v-model="user.login"  label="Логин*"
+                   lazy-rules
+                   :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
           />
-        </q-tabs>
-
-        <q-toolbar-title class="text-center">
-
-        </q-toolbar-title>
-
-        <div>
-          <p class="q-mb-none text-center">{{$auth.user.fio}}</p>
-          <p class="text-caption text-grey q-mb-none text-center">{{$auth.user.is_manager ? 'Менеджер' : 'Администратор'}}</p>
+          <q-input outlined v-model="user.phone"  label="Телефон*"
+                   lazy-rules
+                   :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
+          />
+          <q-input outlined v-model="user.comment" type="textarea"  label="Комментарий"/>
         </div>
-      </q-toolbar>
+        <div class="col-12 col-md-6">
+          <q-input outlined v-model="user.fio"  label="ФИО*"
+                   lazy-rules
+                   :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
+          />
+          <q-input outlined v-model="user.email"  label="Почта"/>
+          <q-toggle v-model="user.is_vip" label="Vip"/>
+          <q-toggle v-model="user.is_problem" label="Проблемный"/>
+          <q-toggle v-model="user.is_private" label="Частный"/>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <q-btn label="Добавить соцсеть" class="q-mb-md" no-caps unelevated outline color="primary" rounded @click="networkAction('add',null)"/>
+          <q-list >
+            <q-item dense class="q-px-none items-start" v-for="(item,index) in user_networks" :key="index">
+              <q-item-section>
+                <q-select outlined behavior="menu" dense v-model="user_networks[index].id" :options="networks" option-label="name" option-value="id"
+                          label="Выберите соц. сеть"
+                          lazy-rules
+                          :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']">
+                  <template v-slot:option="scope">
+                    <q-item v-bind="scope.itemProps">
+                      <q-item-section v-html="scope.opt.icon"></q-item-section>
+                      <q-item-section>{{ scope.opt.name }}</q-item-section>
+                    </q-item>
+                  </template>
+                </q-select>
+              </q-item-section>
+              <q-item-section>
+                <q-input dense outlined v-model="user_networks[index].link" label="Ссылка"
+                         lazy-rules
+                         :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"/>
+              </q-item-section>
+              <q-item-section>
+                <q-btn label="Удалить ссылку" no-caps unelevated  color="negative" rounded @click="networkAction('delete',index)"/>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </div>
+        <div class="col-12 col-md-6">
+          <q-btn label="Добавить файл" class="q-mb-md" no-caps unelevated outline color="primary" rounded @click="fileAction('add',null)"/>
+          <q-list >
+            <q-item dense class="q-px-none items-start" v-for="(file,index) in user_files" :key="index">
+              <q-item-section>
+                <q-file dense outlined v-model="user_files[index].file" label="Выберите файл"
+                        lazy-rules
+                        :rules="[ val => val  || 'Это обязательное поле']"/>
+              </q-item-section>
+              <q-item-section>
+                <q-input dense outlined v-model="user_files[index].description" label="Описание файла"
+                         lazy-rules
+                         :rules="[ val => val  || 'Это обязательное поле']"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-btn label="Удалить файл" no-caps unelevated  color="negative" rounded @click="fileAction('delete',index)"/>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </div>
+        <div class="col-12">
+          <p v-if="error_text" class="text-bold text-negative">{{error_text}}</p>
+          <q-btn type="submit" no-caps unelevated color="primary" rounded label="Сохранить пользователя"/>
+        </div>
+      </q-form>
+    </q-card-section>
+  </q-card>
 
 
-    </q-header>
-    <q-form @submit="formSubmit">
-
-        <q-input outlined v-model="user.login"  label="Логин*"
-                 lazy-rules
-                 :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
-        />
-      <q-input outlined v-model="user.fio"  label="ФИО*"
-               lazy-rules
-               :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
-      />
-      <q-input outlined v-model="user.phone"  label="Телефон*"
-               lazy-rules
-               :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
-      />
-      <q-input outlined v-model="user.email"  label="Почта"/>
-      <q-input outlined v-model="user.comment" type="textarea"  label="Комментарий"/>
-      <q-toggle v-model="user.is_vip" label="Vip"/>
-      <q-toggle v-model="user.is_problem" label="Проблемный"/>
-      <q-toggle v-model="user.is_private" label="Частный"/>
-     <q-separator spaced="lg"/>
-      <q-btn label="Добавить соцсеть" @click="networkAction('add',null)"/>
-      <q-list separator>
-        <q-item v-for="(item,index) in user_networks" :key="index">
-          <q-item-section>
-            <q-input outlined v-model="user_networks[index].name" label="Название соцсети"
-                    lazy-rules
-                     :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"/>
-          </q-item-section>
-          <q-item-section>
-            <q-input outlined v-model="user_networks[index].link" label="Ссылка"
-                     lazy-rules
-                     :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"/>
-          </q-item-section>
-          <q-item-section>
-            <q-btn label="Удалить ссылку" @click="networkAction('delete',index)"/>
-          </q-item-section>
-        </q-item>
-      </q-list>
-      <q-separator spaced="lg"/>
-      <q-btn label="Добавить файл" @click="fileAction('add',null)"/>
-      <q-list separator>
-        <q-item v-for="(file,index) in user_files" :key="index">
-          <q-item-section>
-            <q-file outlined v-model="user_files[index].file" label="Выберите файл"
-                    lazy-rules
-                    :rules="[ val => val  || 'Это обязательное поле']"/>
-          </q-item-section>
-          <q-item-section>
-            <q-input outlined v-model="user_files[index].description" label="Описание файла"/>
-          </q-item-section>
-          <q-item-section>
-            <q-btn label="Удалить файл" @click="fileAction('delete',index)"/>
-          </q-item-section>
-        </q-item>
-      </q-list>
-      <q-separator spaced="lg"/>
-      <p v-if="error_text" class="text-bold text-negative">{{error_text}}</p>
-      <q-btn type="submit" label="Сохранить пользователя"/>
-    </q-form>
   </q-page>
 </template>
 <script setup>
 import {useNotify} from "src/helpers/notify";
-import {ref} from "vue";
+import {onBeforeMount, ref} from "vue";
 import {api} from "boot/axios";
 import {useRouter} from "vue-router";
 const router = useRouter()
 const error_text = ref('')
+const networks = ref(null)
+import {getNetworks} from "src/helpers/useOrder";
+
+
 const user = ref({
   email: null,
   login: null,
@@ -107,10 +114,14 @@ const user = ref({
 const user_files = ref([])
 const user_networks = ref([])
 
+onBeforeMount(async ()=>{
+  networks.value = await getNetworks()
+})
+
 const networkAction = (action,index) => {
   if (action==='add'){
     user_networks.value.push({
-      name:null,
+      id:null,
       link:null,
     })
   }

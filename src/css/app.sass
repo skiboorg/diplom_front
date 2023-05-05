@@ -2,8 +2,20 @@ body
   background: #F9FBFF
   font-family: 'Inter', sans-serif
   color: #4D515A
+button
+  border: none
+  background: transparent
+  padding: 0
+  margin: 0
+  cursor: pointer
 .q-card
-  box-shadow: 0px 10px 60px rgba(226, 236, 249, 0.5)
+  border-radius: 15px
+  border: 1px solid #DEE0E8
+  box-shadow: none
+
+.q-dialog__inner > div
+  background: #FFFFFF
+  border: 1px solid #DEE0E8
   border-radius: 15px
 
 .text-caption-alt
@@ -38,6 +50,7 @@ body
 .container
   max-width: 1300px
   margin: 0 auto
+  padding: 0 10px
 .file-icon
   svg
     path
@@ -47,8 +60,33 @@ body
     svg
       path
         fill: #726BEA
+.comments
+  height: 60vh
+
+.files
+  height: 30vh
+
 @media (max-width: 768px)
   .order-list-row
     display: grid
     grid-template-columns: 1fr
     grid-gap: 10px
+    padding: 0 0 10px 0
+    border-bottom: 1px solid #DEE0E8
+    margin-bottom: 5px
+    & .q-item__section
+      display: grid
+      grid-template-columns: 1fr 1fr
+      align-items: center
+      margin: 0
+  .comments
+    height: 250px
+  .files
+    height: 250px
+  .bordered
+    border: unset !important
+
+
+.table-top
+  border-radius: 10px
+  background: #F9F9FB
