@@ -1,69 +1,96 @@
 
 const routes = [
   {
-    path: '/auth',
-    component: () => import('layouts/Auth.vue'),
-    children: [
-      { path: '', component: () => import('pages/Login.vue') }
-    ]
-  },
-  {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/Front.vue'),
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') }
+      { path: '', component: () => import('pages/front/index.vue') }
     ]
   },
   {
-    path: '/order/add',
-    component: () => import('layouts/MainLayout.vue'),
+    path: '/category/:name_slug',
+    component: () => import('layouts/Front.vue'),
     children: [
-      { path: '', component: () => import('pages/order/AddOrder.vue') }
+      { path: '', component: () => import('pages/front/category.vue') }
     ]
   },
   {
-    path: '/order/:uuid',
-    component: () => import('layouts/MainLayout.vue'),
+    path: '/country/:name_slug',
+    component: () => import('layouts/Front.vue'),
     children: [
-      { path: '', component: () => import('pages/order/OrderInfo.vue') }
+      { path: '', component: () => import('pages/front/country.vue') }
     ]
   },
   {
-    path: '/order/edit/:uuid',
-    component: () => import('layouts/MainLayout.vue'),
+    path: '/service/:name_slug',
+    component: () => import('layouts/Front.vue'),
     children: [
-      { path: '', component: () => import('pages/order/EditOrder.vue') }
+      { path: '', component: () => import('pages/front/service.vue') }
     ]
   },
   {
-    path: '/users/:uuid',
-    component: () => import('layouts/MainLayout.vue'),
+    path: '/crm/auth',
+    component: () => import('layouts/CrmAuth.vue'),
     children: [
-      { path: '', component: () => import('pages/user/UserInfo.vue') }
+      { path: '', component: () => import('pages/crm/Login.vue') }
     ]
   },
   {
-    path: '/users/edit/:uuid',
-    component: () => import('layouts/MainLayout.vue'),
+    path: '/crm',
+    component: () => import('layouts/CrmLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/user/Edit.vue') }
+      { path: '', component: () => import('pages/crm/IndexPage.vue') }
     ]
   },
   {
-    path: '/users',
-    component: () => import('layouts/MainLayout.vue'),
+    path: '/crm/order/add',
+    component: () => import('layouts/CrmLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/user/All.vue') }
+      { path: '', component: () => import('pages/crm/order/AddOrder.vue') }
     ]
   },
   {
-    path: '/users/add',
-    component: () => import('layouts/MainLayout.vue'),
+    path: '/crm/order/:uuid',
+    component: () => import('layouts/CrmLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/user/Add.vue') }
+      { path: '', component: () => import('pages/crm/order/OrderInfo.vue') }
     ]
   },
-
+  {
+    path: '/crm/order/edit/:uuid',
+    component: () => import('layouts/CrmLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/crm/order/EditOrder.vue') }
+    ]
+  },
+  {
+    path: '/crm/users/:uuid',
+    component: () => import('layouts/CrmLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/crm/user/UserInfo.vue') }
+    ]
+  },
+  {
+    path: '/crm/users/edit/:uuid',
+    component: () => import('layouts/CrmLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/crm/user/Edit.vue') }
+    ]
+  },
+  {
+    path: '/crm/users',
+    component: () => import('layouts/CrmLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/crm/user/All.vue') }
+    ]
+  },
+  {
+    path: '/crm/users/add',
+    component: () => import('layouts/CrmLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/crm/user/Add.vue') }
+    ]
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

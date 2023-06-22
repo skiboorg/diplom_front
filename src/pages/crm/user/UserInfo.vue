@@ -10,14 +10,14 @@
             color="primary"
           />
         </template>
-        <q-breadcrumbs-el label="Главная" to="/" />
-        <q-breadcrumbs-el label="Клиенты" to="/users" />
+        <q-breadcrumbs-el label="Главная" to="/crm" />
+        <q-breadcrumbs-el label="Клиенты" to="/crm/users" />
         <q-breadcrumbs-el :label="`Клиент ${user.fio}`"  />
       </q-breadcrumbs>
 
       <div class="flex items-center q-mb-lg q-gutter-md">
-        <q-btn label="Добавить заказ" unelevated no-caps :to="`/order/add?u=${user?.uuid}`" color="primary" rounded />
-        <q-btn label="Редактировать пользователя" unelevated no-caps :to="`/users/edit/${user?.uuid}`" color="primary" rounded outline />
+        <q-btn label="Добавить заказ" unelevated no-caps :to="`/crm/order/add?u=${user?.uuid}`" color="primary" rounded />
+        <q-btn label="Редактировать пользователя" unelevated no-caps :to="`/crm/users/edit/${user?.uuid}`" color="primary" rounded outline />
 
         <DeleteBtn :is_big_btn="true" @confirm="deleteUser" label="Удалить" text="Вы действительно хотите удалить пользователя?"/>
       </div>

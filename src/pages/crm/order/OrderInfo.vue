@@ -10,7 +10,7 @@
             <q-card >
               <q-card-section>
                 <div class="q-mb-lg q-gutter-md">
-                  <q-btn label="Редактировать" @click="$router.push(`/order/edit/${order.uuid}`)" color="primary" no-caps unelevated rounded/>
+                  <q-btn label="Редактировать" @click="$router.push(`/crm/order/edit/${order.uuid}`)" color="primary" no-caps unelevated rounded/>
 
                   <q-btn-dropdown color="primary" label="Изменить статус проекта" no-caps unelevated rounded outline>
                     <q-list>

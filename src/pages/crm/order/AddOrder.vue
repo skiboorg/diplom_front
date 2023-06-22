@@ -22,7 +22,8 @@
             </q-item>
           </template>
         </q-select>
-        <q-select outlined v-if="order.user" v-model="order.category" :options="categories"  option-label="name"
+        <q-select outlined v-if="order.user" v-model="order.category" :options="categories"
+                  option-label="name"
                   v-on:update:model-value="order.service=null" label="Выберите категорию"
                   lazy-rules
                   :rules="[ val => val  || 'Это обязательное поле']"

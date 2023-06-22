@@ -6,7 +6,7 @@
         <div class="flex justify-between q-mb-md">
           <p class="q-mb-md q-mb-md-none text-bold text-h5">Заказы <span class="text-grey">{{orders?.length}}</span></p>
           <div class="flex items-center">
-            <q-btn label="Новый заказ" unelevated no-caps to="/order/add" class="bg-btn-primary q-mr-md" />
+            <q-btn label="Новый заказ" unelevated no-caps to="crm/order/add" class="bg-btn-primary q-mr-md" />
             <q-btn icon="filter_list" label="Фильтр" @click="filtersDialog=true" no-caps flat unelevated color="primary" rounded/>
           </div>
         </div>
@@ -42,7 +42,7 @@
 
 
           </q-item>
-          <q-item class="order-list-row" clickable v-for="order in orders" :key="order.id" :to="`/order/${order.uuid}`">
+          <q-item class="order-list-row" clickable v-for="order in orders" :key="order.id" :to="`crm/order/${order.uuid}`">
 <!--            <q-item-section >-->
 <!--              <div class="flex ">-->
 <!--                <q-icon v-if="order.user.is_vip" name="las la-crown" color="warning" size="20px"/>-->

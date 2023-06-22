@@ -7,8 +7,8 @@
       <q-space class="gt-sm"/>
       <div class="col-9 col-md-4 col-lg-2 flex justify-center items-center bordered q-py-md q-gutter-md">
 
-        <q-btn  label="Заказы" to="/" no-caps  unelevated color="primary" :flat="$route.path === '/users'"  rounded/>
-        <q-btn  label="Клиенты" to="/users" no-caps  color="primary" unelevated :flat="$route.path === '/'" rounded />
+        <q-btn  label="Заказы" to="/crm" no-caps  unelevated color="primary" :flat="$route.path === '/crm/users'"  rounded/>
+        <q-btn  label="Клиенты" to="/crm/users" no-caps  color="primary" unelevated :flat="$route.path === '/crm'" rounded />
       </div>
       <div class="col-2  col-md-4 col-lg-2 flex justify-center items-center q-gutter-md">
         <q-avatar  size="30">

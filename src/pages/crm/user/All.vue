@@ -9,7 +9,7 @@
           color="primary"
         />
       </template>
-      <q-breadcrumbs-el label="Главная" to="/" />
+      <q-breadcrumbs-el label="Главная" to="/crm" />
       <q-breadcrumbs-el label="Клиенты"  />
     </q-breadcrumbs>
     <q-card>
@@ -17,7 +17,7 @@
         <div class="flex justify-between q-mb-md">
           <p class="q-mb-none text-bold text-h5">Клиенты <span class="text-grey">{{users?.length}}</span></p>
           <div class="flex items-center">
-            <q-btn label="Новый клиент" unelevated no-caps to="/users/add" class="bg-btn-primary q-mr-md" />
+            <q-btn label="Новый клиент" unelevated no-caps to="/crm/users/add" class="bg-btn-primary q-mr-md" />
           </div>
         </div>
         <q-list >
@@ -36,7 +36,7 @@
 
 
           </q-item>
-          <q-item class="order-list-row" clickable v-for="user in users" :key="user.id" :to="`/users/${user.uuid}`">
+          <q-item class="order-list-row" clickable v-for="user in users" :key="user.id" :to="`/crm/users/${user.uuid}`">
 
             <q-item-section>
               <q-item-label v-if="$q.screen.lt.md" caption>Дата добавления</q-item-label>
