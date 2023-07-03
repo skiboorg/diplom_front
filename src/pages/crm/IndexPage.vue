@@ -177,7 +177,7 @@ onBeforeMount(async ()=>{
   await getOrders()
   order_statuses.value = await getStatuses()
   pay_statuses.value = await getPayStatuses()
-  const response = await api('/api/data/categories')
+  const response = await api('/api/data/category')
   categories.value = response.data
 })
 

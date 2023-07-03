@@ -21,7 +21,7 @@
             </div>
 
             <p class="text-h6 text-dark text-bold q-mb-md">{{service.name}}</p>
-            <p class="text-body2 text-weight-thin">{{service.info_text}}</p>
+            <p class="text-body2 text-weight-thin ellipsis-2-lines">{{service.info_text}}</p>
             <div class="flex items-center q-mb-lg">
               <q-chip class="chip" outline :label="`${service.price} ₽`"/>
               <q-chip class="chip" outline :label="service.work_time"/>

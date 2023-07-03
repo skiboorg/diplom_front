@@ -12,16 +12,18 @@
         </svg>
           Назад</router-link>
       </div>
+
+
       <p class="text-bold text-h3 text-dark q-mb-xl">Услуги по {{country.name}}</p>
       <div class="row q-col-gutter-md q-mb-xl">
-        <div class="col-12 col-md-4" v-for="service in country.services" :key="service.id">
+        <div class="col-12 col-md-4" v-for="service in services" :key="service.id">
           <div class="service service-alt">
             <div class="service-img">
               <img :src="service.icon" alt="">
             </div>
 
             <p class="text-h6 text-dark text-bold q-mb-md">{{service.name}}</p>
-            <p class="text-body2 text-weight-thin">{{service.info_text}}</p>
+            <p class="text-body2 text-weight-thin ellipsis-2-lines">{{service.info_text}}</p>
             <div class="flex items-center q-mb-lg">
               <q-chip class="chip" outline :label="`${service.price} ₽`"/>
               <q-chip class="chip" outline :label="service.work_time"/>
@@ -53,10 +55,13 @@ import {api} from "boot/axios";
 import {useRoute} from "vue-router";
 
 const country = ref([])
+const services = ref([])
 const route = useRoute()
 onBeforeMount(async ()=>{
   const response = await api(`/api/data/country/${route.params.name_slug}`)
   country.value = response.data
 
+  const response2 = await api(`/api/data/service_by_country?c=${route.params.name_slug}`)
+  services.value = response2.data
 })
 </script>

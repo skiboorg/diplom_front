@@ -178,13 +178,13 @@ const fileAction = async  (action,index,is_new,delete_id) => {
 }
 
 const getOrder = async () => {
-  const response = await api(`/api/data/orders/${route.params.uuid}`)
+  const response = await api(`/api/data/order/${route.params.uuid}`)
   order.value = response.data
   order_files.value = response.data.files
 }
 
 const getCategories = async () => {
-  const response = await api('/api/data/categories')
+  const response = await api('/api/data/category')
   categories.value = response.data
   order_statuses.value = await getStatuses()
   pay_statuses.value = await getPayStatuses()
@@ -209,7 +209,7 @@ const formSubmit = async () => {
   console.log(formData)
   api({
     method: "put",
-    url: `/api/data/orders/${route.params.uuid}`,
+    url: `/api/data/order/${route.params.uuid}`,
     data: formData,
     headers: { "Content-Type": "multipart/form-data" },
   }).then((response)=>{

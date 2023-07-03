@@ -279,7 +279,7 @@ const changeStatus = async (status) => {
 
   api({
     method: "put",
-    url: `/api/data/orders/${route.params.uuid}`,
+    url: `/api/data/order/${route.params.uuid}`,
     data: formData,
     headers: {"Content-Type": "multipart/form-data"},
   }).then((response) => {
@@ -295,12 +295,12 @@ const changeStatus = async (status) => {
 
 const getOrder = async () => {
   is_loading.value = !is_loading.value
-  const response = await api(`/api/data/orders/${route.params.uuid}`)
+  const response = await api(`/api/data/order/${route.params.uuid}`)
   order.value = response.data
   is_loading.value = !is_loading.value
 }
 const deleteOrder = async () => {
-  await api.delete(`/api/data/orders/${route.params.uuid}`)
+  await api.delete(`/api/data/order/${route.params.uuid}`)
   await router.push('/')
 }
 const addComment = async () => {

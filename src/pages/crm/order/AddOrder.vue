@@ -187,7 +187,7 @@ const fileAction = (action,index) => {
 }
 
 const getCategories = async () => {
-  const response = await api('/api/data/categories')
+  const response = await api('/api/data/category')
   categories.value = response.data
   order_statuses.value = await getStatuses()
   pay_statuses.value = await getPayStatuses()

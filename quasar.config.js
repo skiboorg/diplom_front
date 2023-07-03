@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8010'
+const BASE_URL = 'http://localhost:8000'
 
 const { configure } = require('quasar/wrappers');
 

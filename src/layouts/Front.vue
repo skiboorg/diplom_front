@@ -29,21 +29,40 @@
             </svg>
 
           </div>
+<!--          indicator-color="accent"-->
           <q-tabs
             v-model="tab"
             no-caps
             class="text-secondary"
             active-color="accent"
-            indicator-color="accent"
+
+            indicator-color="transparent"
+
 
           >
-            <q-tab name="tab1" :ripple="false"  label="Для чего нужно?" />
-            <q-tab name="tab2" :ripple="false" label="Преимущества" />
-            <q-tab name="tab3" :ripple="false" label="Наши услуги" />
-            <q-tab name="tab4" :ripple="false" label="Этапы работ" />
-            <q-tab name="tab5" :ripple="false" label="О нас" />
-            <q-tab name="tab6" :ripple="false" label="Ответы на вопросы" />
-            <q-tab name="tab7" :ripple="false" label="Контакты" />
+            <q-route-tab name="tab1" :ripple="false" to="/" label="ГЛАВНАЯ" />
+            <q-btn-dropdown :ripple="false" flat label="УСЛУГИ">
+<q-list>
+  <q-item v-for="cat in categories" :key="cat.id">
+    <q-item-section >
+      <a   :href="`/category/${cat.name_slug}`">{{cat.name}}</a>
+    </q-item-section>
+  </q-item>
+</q-list>
+
+
+
+            </q-btn-dropdown>
+            <q-btn-dropdown :ripple="false" auto-close stretch flat label="НАПРАВЛЕНИЯ">
+              <q-list  >
+                <q-item v-for="cat in directions" :key="cat.id" :ripple="false" clickable @click="$router.push(`/category/${cat.name_slug}`)">
+                  <q-item-section>{{cat.name}}</q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+            <q-tab name="tab5" :ripple="false" label="ТУРЫ ПО СТРАНАМ" />
+            <q-tab name="tab6" :ripple="false" label="КОНТАКТЫ" />
+
 
           </q-tabs>
           <q-btn label="Войти" unelevated text-color="dark" size="14px" no-caps to="crm/order/add" class="bg-btn-primary q-py-md q-px-lg" />
@@ -55,9 +74,19 @@
   </q-layout>
 </template>
 <script setup>
-import {ref} from "vue";
+import {onBeforeMount, ref} from "vue";
+import {api} from "boot/axios";
 
 const tab= ref('tab1')
+const categories = ref([])
+const directions = ref([])
+
+onBeforeMount(async ()=>{
+  const response_categories = await api(`/api/data/category`)
+  categories.value = response_categories.data
+  const response_directions = await api(`/api/data/direction`)
+  directions.value = response_directions.data
+})
 </script>
 <style lang="sass">
 .header
