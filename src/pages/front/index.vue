@@ -9,10 +9,12 @@
           arrows
           infinite
         >
-          <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" />
-          <q-carousel-slide :name="2" img-src="https://cdn.quasar.dev/img/parallax1.jpg" />
-          <q-carousel-slide :name="3" img-src="https://cdn.quasar.dev/img/parallax2.jpg" />
-          <q-carousel-slide :name="4" img-src="https://cdn.quasar.dev/img/quasar.jpg" />
+          <q-carousel-slide :name="index"
+                            class="cursor-pointer"
+                            @click="$router.push(banner.url)"
+                            v-for="(banner,index) in banners"
+                            :img-src="banner.image" />
+
         </q-carousel>
       </div>
     </section>
@@ -219,10 +221,11 @@
 <script setup>
 import {onBeforeMount, ref} from "vue";
 import {api} from "boot/axios";
-const  slide = ref(1)
+const  slide = ref(0)
 
 const categories = ref([])
 const directions = ref([])
+const banners = ref([])
 const cur_faq = ref(0)
 
 const faq =[
@@ -240,6 +243,8 @@ onBeforeMount(async ()=>{
   categories.value = response_categories.data
   const response_directions = await api(`/api/data/direction`)
   directions.value = response_directions.data
+  const response_banner = await api(`/api/data/banner`)
+  banners.value = response_banner.data
 })
 
 
@@ -339,7 +344,7 @@ onBeforeMount(async ()=>{
     margin-bottom: 0 !important
 .faq-grid
 .faq-item
-  height: 124px
+  height: 84px
   overflow: hidden
   background: #FFFFFF
   border-radius: 20px
@@ -356,7 +361,7 @@ onBeforeMount(async ()=>{
   justify-content: space-between
 
   cursor: pointer
-  padding: 40px 60px
+  padding: 20px 30px
   p
     max-width: 80%
   svg
