@@ -19,10 +19,10 @@
       </div>
     </section>
 
-    <section>
+    <section >
       <div class="container">
         <p class="text-bold text-h3 text-dark q-mb-xl">Наши услуги</p>
-        <div class="row q-col-gutter-md">
+        <div class="row q-col-gutter-md" id="#services">
           <div class="col-12 col-md-4" v-for="cat in categories" :key="cat.id">
             <div class="service">
               <img :src="cat.image" alt="">
@@ -48,7 +48,7 @@
     <div class="border-box">
       <p class="text-h4 text-bold no-margin text-dark">Направления и страны, по которым работаем</p>
       <q-separator spaced="xl"/>
-      <div v-for="dir in directions" :key="dir.id">
+      <div v-for="dir in directions" :key="dir.id" class="q-mt-lg">
         <p class="text-h5 text-bold text-dark">{{dir.name}}</p>
         <div class="flag-grid" >
           <div @click="$router.push(`/country/${c.name_slug}`)" class="flag" v-for="c in dir.countries" :key="c.id">
@@ -170,7 +170,7 @@
             <div class="col-12 col-md-3">
               <div class="step">
                 <img src="https://placehold.co/200" alt="">
-                <p class="step-number">1</p>
+                <p class="step-number">2</p>
                 <p class="text-bold text-dark text-h6 title">Получение заявки от клиента</p>
                 <p class="no-margin subtitle">Краткое описание этапа dolor sit amet, consectetur adipiscing elit.</p>
               </div>
@@ -178,7 +178,7 @@
             <div class="col-12 col-md-3">
               <div class="step">
                 <img src="https://placehold.co/200" alt="">
-                <p class="step-number">1</p>
+                <p class="step-number">3</p>
                 <p class="text-bold text-dark text-h6 title">Получение заявки от клиента</p>
                 <p class="no-margin subtitle">Краткое описание этапа dolor sit amet, consectetur adipiscing elit.</p>
               </div>
@@ -186,7 +186,7 @@
             <div class="col-12 col-md-3">
               <div class="step no-p">
                 <img src="https://placehold.co/200" alt="">
-                <p class="step-number">1</p>
+                <p class="step-number">4</p>
                 <p class="text-bold text-dark text-h6 title">Получение заявки от клиента</p>
                 <p class="no-margin subtitle">Краткое описание этапа dolor sit amet, consectetur adipiscing elit.</p>
               </div>
@@ -203,7 +203,7 @@
         <div class="faq-grid">
           <div class="faq-item" :class="{'item-active':cur_faq===index}" @click="cur_faq=index" v-for="(item,index) in faq">
             <div class="faq-header">
-              <p class="no-margin text-dark text-h5 ">{{item.q}}</p>
+              <p class="no-margin text-dark text-h4 ">{{item.q}}</p>
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle opacity="0.6" cx="22" cy="22" r="21"  stroke-width="2"/>
                 <path opacity="0.6" d="M23 29H21V23H15L15 21H21V15H23V21H29V23H23V29Z" />
@@ -312,17 +312,21 @@ onBeforeMount(async ()=>{
     background: #0F1B47
     border-radius: 100%
     color: #FFFFFF
-    padding: 5px 15px
     font-size: 24px
     font-weight: 700
     margin-bottom: 40px
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    width: 46px
+    height: 46px
   img
     margin-bottom: 60px
   & .title
-    margin-bottom: 24px
+    margin-bottom: 18px
     text-align: center
   & .subtitle
-    font-size: 18px
+    font-size: 14px
     line-height: 155%
     text-align: center
   &::after
@@ -331,7 +335,7 @@ onBeforeMount(async ()=>{
     width: 140px
     height: 2px
     background: #C3C6D1
-    top: 54%
+    top: 60%
     right: -100px
   &.no-p
     &::after
@@ -350,8 +354,10 @@ onBeforeMount(async ()=>{
   border-radius: 20px
   transition: all .2s linear
   margin-bottom: 10px
+  border: 1px solid transparent
   &.item-active
     height: max-content
+    border-color: #ECEBEB
     svg
       transform: rotate(45deg)
 
@@ -378,7 +384,7 @@ onBeforeMount(async ()=>{
         fill: #407BFF
         stroke: #407BFF
 .faq-text
-  padding: 20px 60px
+  padding: 20px 30px
 
 
 </style>
