@@ -53,7 +53,7 @@
           <p class="no-margin" v-html="service.warn_text">
           </p>
       </div>
-{{tab}}
+
       <div class="row q-col-gutter-md q-mb-md">
         <div class="col-2"><q-btn :color="current_tab==='info' ? 'info' : 'grey-6'"
                                   no-caps unelevated
@@ -94,6 +94,29 @@
 <!--      </div>-->
     </div>
   </q-page>
+  <q-dialog v-model="showModal">
+    <q-card style="width: 700px; max-width: 80vw;">
+      <q-card-section class="row items-center q-pb-none">
+        <div class="text-h6">Заказ услуги {{service.name}}</div>
+        <q-space />
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
+
+      <q-card-section >
+       <q-form>
+         <q-input class="q-mb-md" outlined v-model="formData.fio" label="ФИО"/>
+         <q-input class="q-mb-md" outlined v-model="formData.email" label="E-mail"/>
+         <q-input class="q-mb-md" outlined v-model="formData.phone" label="Телефон*"/>
+         <q-input class="q-mb-md" outlined v-model="formData.time_to_call" label="Когда удобно принять звонок*"/>
+         <q-input class="q-mb-lg" outlined v-model="formData.comment" type="textarea" label="Комментарий"/>
+         <div class="text-center">
+           <q-btn label="Отправить" no-caps unelevated class="bg-btn-primary" type="submit"/>
+         </div>
+
+       </q-form>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 <script setup>
 import {onBeforeMount, ref} from "vue";
@@ -102,7 +125,15 @@ import {useRoute} from "vue-router";
 
 const current_tab = ref('info')
 const service = ref({})
+const showModal = ref(true)
 const route = useRoute()
+const formData = ref({
+  fio:null,
+  email:null,
+  phone:null,
+  time_to_call:null,
+  comment:null,
+})
 onBeforeMount(async ()=>{
   const response = await api(`/api/data/service/${route.params.name_slug}`)
   service.value = response.data

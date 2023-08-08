@@ -23,10 +23,11 @@
       <div class="container">
         <p class="text-bold text-h3 text-dark q-mb-xl">Наши услуги</p>
         <div class="row q-col-gutter-md" id="#services">
-          <div class="col-12 col-md-4" v-for="cat in categories" :key="cat.id">
+          <div class="col-12 col-md-3" v-for="cat in categories" :key="cat.id">
             <div class="service">
               <img :src="cat.image" alt="">
-              <p class="text-h5 text-dark text-bold q-mb-lg">{{cat.name}}</p>
+              <p style="min-height: 65px" class="text-h5 text-dark text-bold q-mb-none">{{cat.name}}</p>
+              <p class="q-mb-lg text-caption">{{cat.short_text}}</p>
               <div class="flex items-center q-mb-lg">
                 <q-chip class="chip" outline :label="`${cat.services.length} услуг`"/>
                 <q-chip class="chip" outline :label="`от ${cat.price_from} ₽`"/>
@@ -282,7 +283,7 @@ onBeforeMount(async ()=>{
   &-grid
     display: grid
     grid-template-columns: repeat(auto-fill, minmax(100px,100px))
-    grid-column-gap: 69px
+    grid-column-gap: 30px
     grid-row-gap: 20px
 .feature
   border-radius: 20px

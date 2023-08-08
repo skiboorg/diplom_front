@@ -3,44 +3,46 @@
     <q-page-container>
       <header class="header">
         <div class="container header-wrapper">
-          <div class="">
+          <div class="col-grow">
           <router-link to="/">
-            <img style="width: 250px" src="~assets/logo.svg" alt="">
+            <img style="width: 180px" src="~assets/logo.svg" alt="">
           </router-link>
 
           </div>
 <!--          indicator-color="accent"-->
-
-          <router-link class="link" to="/" exact-active-class="link-active"  >Главная</router-link>
-          <div class="link no-margin cursor-pointer">Услуги
-          <q-menu class="header-menu" :offset="[10,10]">
-            <q-item v-for="cat in categories" :key="cat.id" >
-              <q-item-section >
-                <router-link :key="cat.id" exact-active-class="link-active"  class="link" :to="`/category/${cat.name_slug}`">{{cat.name}}</router-link>
-              </q-item-section>
-            </q-item>
-          </q-menu>
-          </div>
-
-
-          <div class="link no-margin cursor-pointer">Направления
-            <q-menu class="header-menu" :offset="[10,10]" style="min-width: 200px">
-              <q-list separator>
-                <q-item class="block" v-for="dir in directions" :key="dir.id" >
-                  <p class="text-dark text-bold text-body1">{{dir.name}}</p>
-                  <div v-for="c in dir.countries" :key="c.id">
-                    <router-link :key="dir.id" exact-active-class="link-active"  class="link q-mb-md block" :to="`/country/${c.name_slug}`">{{c.name}}</router-link>
-                  </div>
+          <div class="header-nav">
+            <router-link class="link" to="/" exact-active-class="link-active"  >Главная</router-link>
+            <div class="link no-margin cursor-pointer">Услуги
+              <q-menu class="header-menu" :offset="[10,10]">
+                <q-item v-for="cat in categories" :key="cat.id" >
+                  <q-item-section >
+                    <router-link :key="cat.id" exact-active-class="link-active"  class="link" :to="`/category/${cat.name_slug}`">{{cat.name}}</router-link>
+                  </q-item-section>
                 </q-item>
-              </q-list>
-            </q-menu>
+              </q-menu>
+            </div>
+
+
+            <div class="link no-margin cursor-pointer">Направления
+              <q-menu class="header-menu" :offset="[10,10]" style="min-width: 200px">
+                <q-list separator>
+                  <q-item class="block" v-for="dir in directions" :key="dir.id" >
+                    <p class="text-dark text-bold text-body1">{{dir.name}}</p>
+                    <div v-for="c in dir.countries" :key="c.id">
+                      <router-link :key="dir.id" exact-active-class="link-active"  class="link q-mb-md block" :to="`/country/${c.name_slug}`">{{c.name}}</router-link>
+                    </div>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </div>
+            <router-link class="link" to="/tur" exact-active-class="link-active"  >Туры по странам</router-link>
+            <router-link class="link" to="/contacts" exact-active-class="link-active"  >Контакты</router-link>
           </div>
-          <router-link class="link" to="/tur" exact-active-class="link-active"  >Туры по странам</router-link>
-          <router-link class="link" to="/contacts" exact-active-class="link-active"  >Контакты</router-link>
 
 
 
-          <q-btn label="Войти" unelevated text-color="dark" size="14px" no-caps to="/crm/order/auth" class="bg-btn-primary q-py-md q-px-lg" />
+
+          <q-btn label="Войти" unelevated text-color="dark" size="14px" no-caps to="/crm/auth" class="bg-btn-primary q-py-md q-px-lg" />
         </div>
 
       </header>
@@ -145,4 +147,10 @@ onBeforeMount(async ()=>{
   bottom: -26px
 .q-tabs__content
   overflow: visible
+.header-nav
+  display: flex
+  align-items: center
+  justify-content: end
+  gap: 20px
+  margin-right: 40px
 </style>

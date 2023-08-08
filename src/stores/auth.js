@@ -36,7 +36,11 @@ export const useAuthStore = defineStore('auth', () => {
             position: Screen.lt.sm ? 'bottom' : 'bottom-right',
           })
           await that.getUser()
-          that.router.push('/crm')
+          if (that.user.is_manager){
+            that.router.push('/crm')
+          }else {
+            that.router.push('/lk')
+          }
         })
         .catch(function (error) {
           console.log(error);
