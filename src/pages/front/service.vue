@@ -103,7 +103,7 @@
       </q-card-section>
 
       <q-card-section >
-       <q-form>
+       <q-form @submit.prevent="formSubmit">
          <q-input class="q-mb-md" outlined v-model="formData.fio" label="ФИО"/>
          <q-input class="q-mb-md" outlined v-model="formData.email" label="E-mail"/>
          <q-input class="q-mb-md" outlined v-model="formData.phone" label="Телефон*"/>
@@ -119,7 +119,7 @@
   </q-dialog>
 </template>
 <script setup>
-import {onBeforeMount, ref} from "vue";
+import {onBeforeMount, ref, toRaw} from "vue";
 import {api} from "boot/axios";
 import {useRoute} from "vue-router";
 
@@ -133,12 +133,18 @@ const formData = ref({
   phone:null,
   time_to_call:null,
   comment:null,
+  service_id:null,
 })
 onBeforeMount(async ()=>{
   const response = await api(`/api/data/service/${route.params.name_slug}`)
   service.value = response.data
 
 })
+const formSubmit =  async () => {
+  formData.value.service_id = service.value.id
+  await api.post('/api/data/cb', toRaw(formData.value))
+
+}
 </script>
 <style lang="sass">
 .info-text

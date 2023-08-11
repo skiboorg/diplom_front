@@ -192,7 +192,7 @@ const formSubmit = async () => {
     data: formData,
     headers: { "Content-Type": "multipart/form-data" },
   }).then((response)=>{
-    useNotify('positive','Клиент успешно создан')
+    useNotify('positive','Клиент успешно обновлен')
     router.back()
   }).catch((error)=>{
     let error_keys = Object.keys(error.response.data)

@@ -8,6 +8,13 @@ const routes = [
     ]
   },
   {
+    path: '/lk',
+    component: () => import('layouts/Front.vue'),
+    children: [
+      { path: '', component: () => import('pages/front/lk/index.vue') }
+    ]
+  },
+  {
     path: '/category/:name_slug',
     component: () => import('layouts/Front.vue'),
     children: [
