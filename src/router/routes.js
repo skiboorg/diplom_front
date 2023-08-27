@@ -50,6 +50,13 @@ const routes = [
     ]
   },
   {
+    path: '/crm/forms',
+    component: () => import('layouts/CrmLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/crm/forms.vue') }
+    ]
+  },
+  {
     path: '/crm/order/add',
     component: () => import('layouts/CrmLayout.vue'),
     children: [

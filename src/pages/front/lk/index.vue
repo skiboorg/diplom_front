@@ -84,9 +84,7 @@
                            :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
                   />
                   <q-input outlined v-model="user.email"  label="Почта"/>
-                  <q-toggle v-model="user.is_vip" label="Vip"/>
-                  <q-toggle v-model="user.is_problem" label="Проблемный"/>
-                  <q-toggle v-model="user.is_private" label="Частный"/>
+
                 </div>
                 <div class="col-12 col-md-6">
                   <q-btn :loading="loading" label="Добавить соцсеть" no-caps unelevated outline color="primary" rounded @click="networkAction('add',null,null,null)"/>

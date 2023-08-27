@@ -37,15 +37,7 @@
           </div>
         </div>
       </div>
-      <div class="about">
-        <p class="text-h4 text-bold text-dark q-mb-md">Lorem ipsum dolor.</p>
-        <p>Lorem ipsum dolor sit amet consectetur. Cursus arcu risus aenean euismod egestas convallis est posuere rhoncus. Purus senectus rutrum integer sit. Faucibus sed maecenas sed egestas vitae nisi nisi ante cursus.</p>
-        <q-separator spaced="xl"/>
-        <p class="text-h4 text-bold text-dark q-mb-md">Lorem ipsum dolor.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores blanditiis consequuntur deleniti eaque eos esse, et, fuga id inventore laudantium nemo nobis nostrum obcaecati quam qui repellat suscipit velit voluptate!</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores blanditiis consequuntur deleniti eaque eos esse, et, fuga id inventore laudantium nemo nobis nostrum obcaecati quam qui repellat suscipit velit voluptate!</p>
-        <p class="q-mb-none">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores blanditiis consequuntur deleniti eaque eos esse, et, fuga id inventore laudantium nemo nobis nostrum obcaecati quam qui repellat suscipit velit voluptate!</p>
-      </div>
+      <div class="about" v-html="country.text"></div>
     </div>
   </q-page>
 </template>

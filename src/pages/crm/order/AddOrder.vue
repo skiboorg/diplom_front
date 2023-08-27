@@ -4,11 +4,15 @@
       <q-card-section>
     <q-form @submit="formSubmit" class="row q-col-gutter-md">
       <div class="col-12 col-md-6">
+
         <q-select outlined v-model="order.user"
                   :options="users"  option-label="fio" label="Выберите пользователя"
                   @filter="filterFn"
                   use-input
                   input-debounce="0"
+                  map-options
+                  emit-value
+                  option-value="id"
                   clearable
                   lazy-rules
                   :rules="[ val => val  || 'Это обязательное поле']"
@@ -24,12 +28,16 @@
         </q-select>
         <q-select outlined v-if="order.user" v-model="order.category" :options="categories"
                   option-label="name"
+
                   v-on:update:model-value="order.service=null" label="Выберите категорию"
                   lazy-rules
                   :rules="[ val => val  || 'Это обязательное поле']"
         />
         <q-select v-if="order.category" outlined v-model="order.service"
                   :options="order.category.services"  option-label="name" label="Выберите категорию"
+                  map-options
+                  emit-value
+                  option-value="id"
                   lazy-rules
                   :rules="[ val => val  || 'Это обязательное поле']"
         />
@@ -97,7 +105,7 @@
               <q-item-section>
                 <q-input dense outlined v-model="order_files[index].description" label="Описание файла"
                          lazy-rules
-                         :rules="[ val => val  || 'Это обязательное поле']"
+                         :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
                 />
               </q-item-section>
               <q-item-section>
@@ -220,7 +228,7 @@ const formSubmit = async () => {
   console.log(formData)
   const response = await api({
     method: "post",
-    url: "/api/data/orders",
+    url: "/api/data/order",
     data: formData,
     headers: { "Content-Type": "multipart/form-data" },
   })

@@ -42,7 +42,16 @@
 
 
 
-          <q-btn label="Войти" unelevated text-color="dark" size="14px" no-caps to="/crm/auth" class="bg-btn-primary q-py-md q-px-lg" />
+          <q-btn v-if="!$auth.loggedIn" label="Войти" unelevated text-color="dark" size="14px" no-caps to="/crm/auth" class="bg-btn-primary q-py-md q-px-lg" />
+          <div v-else>
+            <q-btn v-if="$auth.user.is_manager" label="CRM" unelevated text-color="dark" size="14px" no-caps to="/crm" class="bg-btn-primary q-py-md q-px-lg" />
+            <div v-else class="q-gutter-md">
+              <q-btn  label="Личный кабинет" unelevated text-color="dark" size="14px" no-caps to="/lk" class="bg-btn-primary q-py-md q-px-lg" />
+              <q-btn  label="Выход" unelevated text-color="dark" size="14px" no-caps @click="logout" class="bg-btn-primary q-py-md q-px-lg" />
+            </div>
+
+
+          </div>
         </div>
 
       </header>
@@ -114,17 +123,25 @@
 <script setup>
 import {onBeforeMount, ref} from "vue";
 import {api} from "boot/axios";
+import {useAuthStore} from "stores/auth";
+import {useRouter} from "vue-router";
 
 const tab= ref('tab1')
 const categories = ref([])
 const directions = ref([])
-
+const auth_store = useAuthStore()
+const router = useRouter()
 onBeforeMount(async ()=>{
   const response_categories = await api(`/api/data/category`)
   categories.value = response_categories.data
   const response_directions = await api(`/api/data/direction`)
   directions.value = response_directions.data
 })
+const logout = async () => {
+  await auth_store.logoutUser()
+  console.log('sadsad')
+  window.location.href = '/'
+}
 </script>
 <style lang="sass">
 .header-menu

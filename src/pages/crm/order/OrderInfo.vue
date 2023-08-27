@@ -37,7 +37,7 @@
                   <q-separator vertical spaced="md"/>
                   <q-item-section>
                     <q-item-label caption class="text-caption-alt">Клиент</q-item-label>
-                    <q-item-label class="text-dark text-weight-medium"><a href="#" @click.prevent="$router.push(`/crm/users/${order.user.uuid}`)">{{order.user.fio}}</a></q-item-label>
+                    <q-item-label class="text-dark text-weight-medium"><a href="#" @click.prevent="$router.push(`/crm/users/${order.user?.uuid}`)">{{order.user?.fio}}</a></q-item-label>
                   </q-item-section>
                 </q-item>
                 <q-item class="q-px-none q-py-sm">
@@ -49,7 +49,7 @@
                   <q-separator vertical spaced="md"/>
                   <q-item-section>
                     <q-item-label caption class="text-caption-alt">Услуга</q-item-label>
-                    <q-item-label class="text-dark text-weight-medium">{{order.service.name}}</q-item-label>
+                    <q-item-label class="text-dark text-weight-medium">{{order.service?.name}}</q-item-label>
                   </q-item-section>
                 </q-item>
 

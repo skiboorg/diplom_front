@@ -36,7 +36,7 @@
               </div>
               <q-separator vertical/>
               <div class="">
-                <q-btn color="info" label="Заказать услугу"  no-caps unelevated class="q-px-lg q-py-md q-btn-br"/>
+                <q-btn color="info" label="Заказать услугу" @click="showModal = true"  no-caps unelevated class="q-px-lg q-py-md q-btn-br"/>
               </div>
 
 
@@ -97,23 +97,30 @@
   <q-dialog v-model="showModal">
     <q-card style="width: 700px; max-width: 80vw;">
       <q-card-section class="row items-center q-pb-none">
-        <div class="text-h6">Заказ услуги {{service.name}}</div>
+        <div  class="text-h6">Заказ услуги {{service.name}}</div>
+
         <q-space />
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
 
       <q-card-section >
-       <q-form @submit.prevent="formSubmit">
+       <q-form v-if="!is_send" @submit.prevent="formSubmit">
          <q-input class="q-mb-md" outlined v-model="formData.fio" label="ФИО"/>
          <q-input class="q-mb-md" outlined v-model="formData.email" label="E-mail"/>
          <q-input class="q-mb-md" outlined v-model="formData.phone" label="Телефон*"/>
          <q-input class="q-mb-md" outlined v-model="formData.time_to_call" label="Когда удобно принять звонок*"/>
          <q-input class="q-mb-lg" outlined v-model="formData.comment" type="textarea" label="Комментарий"/>
          <div class="text-center">
-           <q-btn label="Отправить" no-caps unelevated class="bg-btn-primary" type="submit"/>
+           <q-btn label="Отправить" :loading="loading" :disable="!formData.phone || !formData.time_to_call" no-caps unelevated class="bg-btn-primary" type="submit"/>
          </div>
 
        </q-form>
+        <div v-else>
+          <p class=" text-body1 text-bold text-center">Заявка успешно отправлена,<br> менеджер свяжется с Вами в течении 24 часов</p>
+          <div class="text-center">
+            <q-btn color="info" label="На главную" to="/"  no-caps unelevated class="q-px-lg q-py-md q-btn-br"/>
+          </div>
+        </div>
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -122,15 +129,18 @@
 import {onBeforeMount, ref, toRaw} from "vue";
 import {api} from "boot/axios";
 import {useRoute} from "vue-router";
-
+import {useAuthStore} from "stores/auth";
+const auth_store = useAuthStore()
 const current_tab = ref('info')
 const service = ref({})
-const showModal = ref(true)
+const showModal = ref(false)
+const is_send = ref(false)
+const loading = ref(false)
 const route = useRoute()
 const formData = ref({
-  fio:null,
-  email:null,
-  phone:null,
+  fio: auth_store.loggedIn ? auth_store.user.fio : null,
+  email:auth_store.loggedIn ? auth_store.user.email : null,
+  phone:auth_store.loggedIn ? auth_store.user.phone : null,
   time_to_call:null,
   comment:null,
   service_id:null,
@@ -141,9 +151,11 @@ onBeforeMount(async ()=>{
 
 })
 const formSubmit =  async () => {
+  loading.value = !loading.value
   formData.value.service_id = service.value.id
   await api.post('/api/data/cb', toRaw(formData.value))
-
+  is_send.value =true
+  loading.value = !loading.value
 }
 </script>
 <style lang="sass">
