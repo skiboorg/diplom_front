@@ -67,7 +67,7 @@
               <q-item-section>
                 <q-input dense outlined v-model="user_files[index].description" label="Описание файла"
                          lazy-rules
-                         :rules="[ val => val  || 'Это обязательное поле']"
+                         :rules="[ val => val !== null && val !== ''  || 'Это обязательное поле']"
                 />
               </q-item-section>
               <q-item-section>
