@@ -24,7 +24,7 @@
               <p class="text-bold text-dark text-h4 q-mb-lg">{{service.name}}</p>
               <p>{{service.info_text}}</p>
             </div>
-            <div style="border: 1px solid #DBDDE3; border-radius: 14px;" class="flex q-pa-lg items-center justify-between full-width">
+            <div style="border: 1px solid #DBDDE3; border-radius: 14px;" class="service-box flex q-pa-lg items-center justify-between full-width">
               <div class="">
                 <p class="q-mb-none">Стоимость услуги</p>
                 <p class="q-mb-none text-h6 text-dark text-bold">{{service.price}} ₽</p>
@@ -35,7 +35,7 @@
                 <p class="q-mb-none text-h6 text-dark text-bold">{{service.work_time}}</p>
               </div>
               <q-separator vertical/>
-              <div class="">
+              <div class="service-box-button">
                 <q-btn color="info" label="Заказать услугу" @click="showModal = true"  no-caps unelevated class="q-px-lg q-py-md q-btn-br"/>
               </div>
 
@@ -55,11 +55,11 @@
       </div>
 
       <div class="row q-col-gutter-md q-mb-md">
-        <div class="col-2"><q-btn :color="current_tab==='info' ? 'info' : 'grey-6'"
+        <div class="col-4 col-md-2"><q-btn :color="current_tab==='info' ? 'info' : 'grey-6'"
                                   no-caps unelevated
                                   @click="current_tab='info'"
                                   class="q-btn-br full-width" label="Информация"/></div>
-        <div class="col-2" v-for="tab in service.tabs" :key="tab.id">
+        <div class="col-4 col-md-2" v-for="tab in service.tabs" :key="tab.id">
           <q-btn :color="current_tab===`tab_${tab.id}` ? 'info' : 'grey-6'"
                  no-caps
                  unelevated
@@ -159,13 +159,5 @@ const formSubmit =  async () => {
 }
 </script>
 <style lang="sass">
-.info-text
-  background: #F6F6FA
-  border-radius: 20px
-  padding: 40px
-  display: flex
-  align-items: center
-  gap: 20px
-  p
-    flex-basis: 90%
+
 </style>

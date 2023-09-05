@@ -1,3 +1,6 @@
+@import "vars"
+@import "breakpoints"
+
 body
   background: #F9FBFF
   font-family: 'Inter', sans-serif
@@ -95,8 +98,12 @@ button
   border: 1px solid rgba(15, 27, 71, 0.3)
   border-radius: 20px
   padding: 60px 80px
+  @include md-d
+    padding: 30px 40px
 section
   margin-bottom: 120px
+  @include md-d
+    margin-bottom: 60px
 
 .back-btn
   color: #407BFF
@@ -120,6 +127,8 @@ section
   border: 1px solid #CFD1DA
   border-radius: 20px
   padding: 40px
+  @include md-d
+    padding: 20px
   img
     width: 140px
     height: 140px
@@ -152,14 +161,26 @@ section
   border-radius: 12px
 .mb-60
   margin-bottom: 60px
+
+.mb120
+  margin-bottom: 120px
+  @include md-d
+    margin-bottom: 60px
 .about
   background: #F4F6FF
   border-radius: 20px
   padding: 60px 80px
+  @include md-d
+    padding: 30px 40px
   img
     width: 520px
     height: 420px
     object-fit: cover
+    @include md-d
+      width: 100%
+      height: auto
+      object-fit: contain
+
 
   &-inner
     border-radius: 14px
@@ -193,3 +214,60 @@ section
 ::-webkit-scrollbar-thumb:hover
   background: #0F1B47
 
+.faq-header
+  display: flex
+  align-items: center
+  justify-content: space-between
+
+  cursor: pointer
+  padding: 20px 30px
+  @include md-d
+    & .text-h4
+      line-height: 100%
+      font-size: 14px !important
+  p
+    max-width: 80%
+  svg
+    path
+      fill: #0F1B47
+    circle
+      stroke: #0F1B47
+  &:hover
+    background: #E3EAFB
+    svg
+      path
+        fill: #FFFFFF
+      circle
+        fill: #407BFF
+        stroke: #407BFF
+.faq-text
+  padding: 20px 30px
+
+.grey-bg
+  background: #F3F5FD
+  padding: 100px 0
+  @include md-d
+    padding: 50px 0
+  &.faq
+    margin-bottom: 0 !important
+.service-box-button
+  @include md-d
+    display: flex
+    justify-content: center
+    flex-grow: 1
+    .q-btn
+      margin-top: 20px
+      width: 100%
+
+
+.info-text
+  background: #F6F6FA
+  border-radius: 20px
+  padding: 40px
+  display: flex
+  align-items: center
+  gap: 20px
+  @include md-d
+    padding: 20px
+  p
+    flex-basis: 90%

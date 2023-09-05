@@ -34,8 +34,14 @@
             <q-item-section>
               <q-item-label>ВРЕМЯ ЗВОНКА</q-item-label>
             </q-item-section>
+            <q-item-section>
+              <q-item-label>Комментарий</q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label></q-item-label>
+            </q-item-section>
           </q-item>
-          <q-item class="order-list-row" clickable v-for="(form,index) in forms" :key="form.id" @click="current_form=index, modal_open=true">
+          <q-item class="order-list-row" clickable v-for="(form,index) in forms" :key="form.id" >
             <q-item-section>
               <q-item-label>{{new Date(form.created_at).toLocaleString()}}</q-item-label>
             </q-item-section>
@@ -50,6 +56,12 @@
             </q-item-section>
             <q-item-section>
               <q-item-label>{{form.time_to_call}}</q-item-label>
+            </q-item-section>
+            <q-item-section @click="current_form=index, modal_open=true">
+              <q-item-label  class="ellipsis"><span style="border-bottom: 1px solid">{{form.comment}}</span></q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label class="text-right"><q-btn label="Скрыть" outline no-caps @click="hide(form.id)"/></q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
@@ -90,5 +102,8 @@ const getForms = async () => {
   const response = await api(`/api/data/all_forms`)
   forms.value = response.data
 }
-
+const hide = async (id) => {
+  await api.post(`/api/data/hide_form`,{id:id})
+  await getForms()
+}
 </script>

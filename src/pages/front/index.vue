@@ -301,8 +301,6 @@ onBeforeMount(async ()=>{
     background: #F7F1FF
   &.v4
     background: #E8FFF4
-.mb120
-  margin-bottom: 120px
 
 .step
   position: relative
@@ -342,11 +340,7 @@ onBeforeMount(async ()=>{
     &::after
       content: none
 
-.grey-bg
-  background: #F3F5FD
-  padding: 100px 0
-  &.faq
-    margin-bottom: 0 !important
+
 .faq-grid
 .faq-item
   height: 84px
@@ -362,30 +356,6 @@ onBeforeMount(async ()=>{
     svg
       transform: rotate(45deg)
 
-.faq-header
-  display: flex
-  align-items: center
-  justify-content: space-between
-
-  cursor: pointer
-  padding: 20px 30px
-  p
-    max-width: 80%
-  svg
-    path
-      fill: #0F1B47
-    circle
-      stroke: #0F1B47
-  &:hover
-    background: #E3EAFB
-    svg
-      path
-        fill: #FFFFFF
-      circle
-        fill: #407BFF
-        stroke: #407BFF
-.faq-text
-  padding: 20px 30px
 
 
 </style>

@@ -145,7 +145,7 @@
 
                   </q-item>
                   <q-scroll-area style="height: 300px">
-                  <q-item class="order-list-row" clickable v-for="order in orders" :key="order.id" :to="`/order/${order.uuid}`">
+                  <q-item class="order-list-row" clickable v-for="order in orders" :key="order.id" :to="`/crm/order/${order.uuid}`">
 
                     <q-item-section>
                       <q-item-label v-if="$q.screen.lt.md" caption>Номер заказа</q-item-label>

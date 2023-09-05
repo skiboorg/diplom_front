@@ -10,7 +10,7 @@
 
           </div>
 <!--          indicator-color="accent"-->
-          <div class="header-nav">
+          <div class="header-nav gt-sm">
             <router-link class="link" to="/" exact-active-class="link-active"  >Главная</router-link>
             <div class="link no-margin cursor-pointer">Услуги
               <q-menu class="header-menu" :offset="[10,10]">
@@ -41,20 +41,63 @@
 
 
 
-
-          <q-btn v-if="!$auth.loggedIn" label="Войти" unelevated text-color="dark" size="14px" no-caps to="/crm/auth" class="bg-btn-primary q-py-md q-px-lg" />
-          <div v-else>
-            <q-btn v-if="$auth.user.is_manager" label="CRM" unelevated text-color="dark" size="14px" no-caps to="/crm" class="bg-btn-primary q-py-md q-px-lg" />
-            <div v-else class="q-gutter-md">
-              <q-btn  label="Личный кабинет" unelevated text-color="dark" size="14px" no-caps to="/lk" class="bg-btn-primary q-py-md q-px-lg" />
-              <q-btn  label="Выход" unelevated text-color="dark" size="14px" no-caps @click="logout" class="bg-btn-primary q-py-md q-px-lg" />
-            </div>
-
-
+          <div class="gt-sm">
+            <q-btn v-if="!$auth.loggedIn" label="Войти" unelevated text-color="dark" size="14px" no-caps to="/crm/auth" class="bg-btn-primary q-py-md q-px-lg" />
+            <div v-else>
+              <q-btn v-if="$auth.user.is_manager" label="CRM" unelevated text-color="dark" size="14px" no-caps to="/crm" class="bg-btn-primary q-py-md q-px-lg" />
+              <div v-else class="q-gutter-md">
+                <q-btn  label="Личный кабинет" unelevated text-color="dark" size="14px" no-caps to="/lk" class="bg-btn-primary q-py-md q-px-lg" />
+                <q-btn  label="Выход" unelevated text-color="dark" size="14px" no-caps @click="logout" class="bg-btn-primary q-py-md q-px-lg" />
+              </div>
+          </div>
+          </div>
+          <div class="lt-md">
+            <q-btn icon="menu" @click="drawer = true" flat round/>
           </div>
         </div>
 
       </header>
+      <q-drawer
+        v-model="drawer"
+        behavior="mobile"
+        side="right"
+
+      >
+        <div class="relative-position q-pa-md">
+          <div class="text-right">
+            <q-btn icon="close" class="" @click="drawer = false" flat round/>
+          </div>
+
+
+          <q-list separator>
+            <q-item clickable to="/"><q-item-section>Главная</q-item-section></q-item>
+            <q-expansion-item label="Услуги" group="menu">
+              <q-list>
+                <q-item  v-for="cat in categories" :key="cat.id" >
+                  <q-item-section >
+                    <router-link :key="cat.id" exact-active-class="link-active"  class="link" :to="`/category/${cat.name_slug}`">{{cat.name}}</router-link>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-expansion-item>
+            <q-expansion-item label="Направления" group="menu">
+              <q-list separator>
+                <q-item class="block" v-for="dir in directions" :key="dir.id" >
+                  <p class="text-dark text-bold text-body1">{{dir.name}}</p>
+                  <div v-for="c in dir.countries" :key="c.id">
+                    <router-link :key="dir.id" exact-active-class="link-active"  class="link q-mb-md block" :to="`/country/${c.name_slug}`">{{c.name}}</router-link>
+                  </div>
+                </q-item>
+              </q-list>
+            </q-expansion-item>
+            <q-item clickable to="/tur"><q-item-section>Туры по странам</q-item-section></q-item>
+            <q-item clickable to="/contacts"><q-item-section>Контакты</q-item-section></q-item>
+
+          </q-list>
+
+        </div>
+
+      </q-drawer>
       <router-view />
       <footer class="footer">
         <div class="container">
@@ -77,7 +120,7 @@
           </div>
         </div>
         <q-separator/>
-        <div class="container">
+        <div class="container gt-sm">
             <div class="flex q-py-lg">
               <router-link class="link q-mr-md" to="/1" exact-active-class="link-active"  >Главная</router-link>
               <router-link class="link q-mr-md" to="/2" exact-active-class="link-active"  >Услуги</router-link>
@@ -127,6 +170,7 @@ import {useAuthStore} from "stores/auth";
 import {useRouter} from "vue-router";
 
 const tab= ref('tab1')
+const drawer= ref(false)
 const categories = ref([])
 const directions = ref([])
 const auth_store = useAuthStore()

@@ -37,7 +37,7 @@
                   <q-separator vertical spaced="md"/>
                   <q-item-section>
                     <q-item-label caption class="text-caption-alt">Клиент</q-item-label>
-                    <q-item-label class="text-dark text-weight-medium"><a href="#" @click.prevent="$router.push(`/crm/users/${order.user?.uuid}`)">{{order.user?.fio}}</a></q-item-label>
+                    <q-item-label class="text-dark text-weight-medium"><a style="border-bottom: 1px solid; cursor: pointer" @click.prevent="$router.push(`/crm/users/${order.user?.uuid}`)">{{order.user?.fio}}</a></q-item-label>
                   </q-item-section>
                 </q-item>
                 <q-item class="q-px-none q-py-sm">
